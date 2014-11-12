@@ -25,3 +25,35 @@
  
    class YajlCallbacks < ::FFI::Struct
      layout :yajl_null, :pointer,
+--- ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
++++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb	2014-11-12 23:20:13.882893756 +0200
+@@ -1,13 +1,8 @@
+ require 'mkmf'
+ require 'rubygems'
+-require 'libyajl2'
+ 
+ RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+ 
+-# pick up the vendored libyajl2 out of the libyajl2 gem
+-$CFLAGS = " -I#{Libyajl2.include_path} #{$CFLAGS}"
+-$LDFLAGS = " -L#{Libyajl2.opt_path} #{$LDFLAGS}"
+-
+ # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
+ $LDFLAGS.slice!("-Wl,--no-undefined")
+ 
+--- ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
++++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb	2014-11-12 23:20:29.100220591 +0200
+@@ -1,13 +1,8 @@
+ require 'mkmf'
+ require 'rubygems'
+-require 'libyajl2'
+ 
+ RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+ 
+-# pick up the vendored libyajl2 out of the libyajl2 gem
+-$CFLAGS = "-I#{Libyajl2.include_path} #{$CFLAGS}"
+-$LDFLAGS = "-L#{Libyajl2.opt_path} #{$LDFLAGS}"
+-
+ # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
+ $LDFLAGS.slice!("-Wl,--no-undefined")
+ 
