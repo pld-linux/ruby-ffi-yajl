@@ -1,3 +1,6 @@
+# TODO
+# - separate subpackages for C extension and FFI extension?
+# - package bench as subpackage?
 #
 # Conditional build:
 %bcond_with	tests		# build without tests
@@ -6,7 +9,7 @@
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
 Version:	1.2.0
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
@@ -41,11 +44,30 @@ Ruby FFI wrapper around YAJL 2.x
 %setup -q -n %{pkgname}-%{version}
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
+%build
+cd ext/ffi_yajl/ext/encoder
+%{__ruby} extconf.rb
+%{__make} V=1 \
+	CC="%{__cc}" \
+	LDFLAGS="%{rpmldflags}" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
+cd ../parser
+%{__ruby} extconf.rb
+%{__make} V=1 \
+	CC="%{__cc}" \
+	LDFLAGS="%{rpmldflags}" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir}}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
+
+install -d $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/{encoder,parser}
+install -p ext/ffi_yajl/ext/parser/parser.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/parser
+install -p ext/ffi_yajl/ext/encoder/encoder.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/encoder
 
 %{__rm} $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark.rb
 %{__rm} -r $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark
@@ -65,7 +87,14 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_vendorlibdir}/ffi_yajl/json_gem.rb
 %{ruby_vendorlibdir}/ffi_yajl/parser.rb
 %{ruby_vendorlibdir}/ffi_yajl/version.rb
-%dir %{ruby_vendorlibdir}/ffi_yajl/ext
 %dir %{ruby_vendorlibdir}/ffi_yajl/ffi
 %{ruby_vendorlibdir}/ffi_yajl/ffi/encoder.rb
 %{ruby_vendorlibdir}/ffi_yajl/ffi/parser.rb
+
+# ext
+%dir %{ruby_vendorarchdir}/ffi_yajl
+%dir %{ruby_vendorarchdir}/ffi_yajl/ext
+%dir %{ruby_vendorarchdir}/ffi_yajl/ext/encoder
+%dir %{ruby_vendorarchdir}/ffi_yajl/ext/parser
+%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/parser/parser.so
+%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/encoder/encoder.so
