@@ -9,11 +9,12 @@
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
 Version:	1.2.0
-Release:	0.2
+Release:	0.3
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	d507e47bd318e13b546b1b1f9c90a3fd
+Patch0:		system-yajl.patch
 URL:		http://github.com/opscode/ffi-yajl
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
@@ -33,8 +34,8 @@ BuildRequires:	ruby-rspec >= 2.99
 %endif
 Requires:	ruby-ffi < 2
 Requires:	ruby-ffi >= 1.5
-Requires:	ruby-libyajl2 < 2
-Requires:	ruby-libyajl2 >= 1.0
+# libyajl.so.2 opened by FFI
+Requires:	yajl >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,6 +43,7 @@ Ruby FFI wrapper around YAJL 2.x
 
 %prep
 %setup -q -n %{pkgname}-%{version}
+%patch0 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 %build

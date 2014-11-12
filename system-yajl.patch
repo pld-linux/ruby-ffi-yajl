@@ -1,0 +1,27 @@
+--- ffi-yajl-1.2.0/lib/ffi_yajl/ffi.rb~	2014-11-12 23:07:49.846221611 +0200
++++ ffi-yajl-1.2.0/lib/ffi_yajl/ffi.rb	2014-11-12 23:13:10.000000000 +0200
+@@ -1,23 +1,10 @@
+-require 'rubygems'
+-
+-require 'libyajl2'
+ require 'ffi'
+ 
+ module FFI_Yajl
+   extend ::FFI::Library
+ 
+   libname = ::FFI.map_library_name("yajl")
+-  # XXX: need to replace ::FFI.map_library_name here as well
+-  libname = "libyajl.so" if libname == "yajl.dll"
+-  libpath = File.expand_path(File.join(Libyajl2.opt_path, libname))
+-  libpath.gsub!(/dylib/, 'bundle')
+-
+-  if File.file?(libpath)
+-    # use our vendored version of libyajl2 if we find it installed
+-    ffi_lib libpath
+-  else
+-    ffi_lib 'yajl'
+-  end
++  ffi_lib 'yajl.so.2'
+ 
+   class YajlCallbacks < ::FFI::Struct
+     layout :yajl_null, :pointer,
