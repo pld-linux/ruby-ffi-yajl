@@ -50,6 +50,9 @@ Ruby FFI wrapper around YAJL 2.x
 # write .gemspec
 %__gem_helper spec
 
+# provided by rpm deps
+%{__sed} -i -e '/libyajl2/d' %{pkgname}-%{version}.gemspec
+
 cd ext/ffi_yajl/ext/encoder
 %{__ruby} extconf.rb
 %{__make} V=1 \
