@@ -9,7 +9,7 @@
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
 Version:	1.2.0
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
@@ -47,6 +47,9 @@ Ruby FFI wrapper around YAJL 2.x
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 %build
+# write .gemspec
+%__gem_helper spec
+
 cd ext/ffi_yajl/ext/encoder
 %{__ruby} extconf.rb
 %{__make} V=1 \
@@ -63,9 +66,10 @@ cd ../parser
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir}}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 install -d $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/{encoder,parser}
 install -p ext/ffi_yajl/ext/parser/parser.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/parser
@@ -92,6 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{ruby_vendorlibdir}/ffi_yajl/ffi
 %{ruby_vendorlibdir}/ffi_yajl/ffi/encoder.rb
 %{ruby_vendorlibdir}/ffi_yajl/ffi/parser.rb
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 # ext
 %dir %{ruby_vendorarchdir}/ffi_yajl
