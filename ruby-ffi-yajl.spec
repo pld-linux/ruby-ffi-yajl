@@ -19,7 +19,9 @@ URL:		http://github.com/opscode/ffi-yajl
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
 BuildRequires:	ruby-devel
+BuildRequires:	ruby-rubygems
 BuildRequires:	sed >= 4.0
+BuildRequires:	yajl-devel >= 2.0
 %if %{with tests}
 BuildRequires:	ruby-mime-types < 2
 BuildRequires:	ruby-mime-types >= 1.16
