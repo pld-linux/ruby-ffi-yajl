@@ -75,8 +75,8 @@ cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 install -d $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/{encoder,parser}
-install -p ext/ffi_yajl/ext/parser/parser.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/parser
-install -p ext/ffi_yajl/ext/encoder/encoder.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/encoder
+install -p ext/ffi_yajl/ext/parser/parser.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext
+install -p ext/ffi_yajl/ext/encoder/encoder.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext
 
 %{__rm} $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark.rb
 %{__rm} -r $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark
@@ -106,5 +106,5 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{ruby_vendorarchdir}/ffi_yajl/ext
 %dir %{ruby_vendorarchdir}/ffi_yajl/ext/encoder
 %dir %{ruby_vendorarchdir}/ffi_yajl/ext/parser
-%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/parser/parser.so
-%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/encoder/encoder.so
+%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/parser.so
+%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/encoder.so
