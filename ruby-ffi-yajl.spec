@@ -8,12 +8,12 @@
 %define	pkgname	ffi-yajl
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
-Version:	1.2.0
-Release:	2
+Version:	1.3.0
+Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	d507e47bd318e13b546b1b1f9c90a3fd
+# Source0-md5:	fc49fe091cd622b75924c8dfa23fe806
 Patch0:		system-yajl.patch
 URL:		http://github.com/opscode/ffi-yajl
 BuildRequires:	rpm-rubyprov
