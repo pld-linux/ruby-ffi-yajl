@@ -53,8 +53,8 @@
  # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
  $LDFLAGS.slice!("-Wl,--no-undefined")
  
---- ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb~	2016-06-02 18:51:31.000000000 +0300
-+++ ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 18:53:35.695211477 +0300
+--- ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 18:53:35.695211477 +0300
++++ ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 19:07:39.085294423 +0300
 @@ -20,8 +20,6 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -82,3 +82,12 @@
      end
  
      # Array of yajl library names prepended with the libyajl2 path to use to
+@@ -78,7 +67,7 @@
+     # @api private
+     def dlopen_yajl_library
+       found = false
+-      ( expanded_library_names + library_names ).each do |libname|
++      ( library_names ).each do |libname|
+         begin
+           dlopen(libname)
+           found = true
