@@ -9,7 +9,7 @@
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
 Version:	2.2.3
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
@@ -72,6 +72,13 @@ cd ../parser
 	LDFLAGS="%{rpmldflags}" \
 	CFLAGS="%{rpmcflags} -fPIC"
 
+cd ../dlopen
+%{__ruby} extconf.rb
+%{__make} V=1 \
+	CC="%{__cc}" \
+	LDFLAGS="%{rpmldflags}" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir}}
@@ -82,6 +89,7 @@ cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 install -d $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext/{encoder,parser}
 install -p ext/ffi_yajl/ext/parser/parser.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext
 install -p ext/ffi_yajl/ext/encoder/encoder.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext
+install -p ext/ffi_yajl/ext/dlopen/dlopen.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}/ffi_yajl/ext
 
 %{__rm} $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark.rb
 %{__rm} -r $RPM_BUILD_ROOT%{ruby_vendorlibdir}/ffi_yajl/benchmark
@@ -114,3 +122,4 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{ruby_vendorarchdir}/ffi_yajl/ext/parser
 %attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/parser.so
 %attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/encoder.so
+%attr(755,root,root) %{ruby_vendorarchdir}/ffi_yajl/ext/dlopen.so
