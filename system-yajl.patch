@@ -1,52 +1,26 @@
---- ffi-yajl-1.2.0/lib/ffi_yajl/ffi.rb~	2014-11-12 23:07:49.846221611 +0200
-+++ ffi-yajl-1.2.0/lib/ffi_yajl/ffi.rb	2014-11-12 23:13:10.000000000 +0200
-@@ -1,23 +1,10 @@
+--- ffi-yajl-2.2.3/lib/ffi_yajl/ffi.rb~	2016-06-02 18:51:31.000000000 +0300
++++ ffi-yajl-2.2.3/lib/ffi_yajl/ffi.rb	2016-06-02 18:52:21.951416437 +0300
+@@ -20,9 +20,6 @@
+ # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
 -require 'rubygems'
 -
 -require 'libyajl2'
- require 'ffi'
+ begin
+   require 'ffi'
+ rescue LoadError
+--- ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb~	2016-06-02 18:54:08.000000000 +0300
++++ ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb	2016-06-02 18:54:34.768251524 +0300
+@@ -20,8 +20,6 @@
+ # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
- module FFI_Yajl
-   extend ::FFI::Library
- 
-   libname = ::FFI.map_library_name("yajl")
--  # XXX: need to replace ::FFI.map_library_name here as well
--  libname = "libyajl.so" if libname == "yajl.dll"
--  libpath = File.expand_path(File.join(Libyajl2.opt_path, libname))
--  libpath.gsub!(/dylib/, 'bundle')
+-require 'rubygems'
 -
--  if File.file?(libpath)
--    # use our vendored version of libyajl2 if we find it installed
--    ffi_lib libpath
--  else
--    ffi_lib 'yajl'
--  end
-+  ffi_lib 'yajl.so.2'
- 
-   class YajlCallbacks < ::FFI::Struct
-     layout :yajl_null, :pointer,
---- ruby-ffi-yajl-1.3.1/lib/ffi_yajl/ext.rb	2015-01-22 13:55:11.513182150 +0200
-+++ ruby-ffi-yajl-1.3.1/lib/ffi_yajl/ext.rb	2015-01-22 13:55:53.882526948 +0200
-@@ -3,18 +3,9 @@
  require 'ffi_yajl/encoder'
  require 'ffi_yajl/parser'
- require 'ffi'
--require 'libyajl2'
- 
- module FFI_Yajl
--  # FIXME: DRY with ffi_yajl/ffi.rb
--  # FIXME: extract map_library_name from FFI and stop requiring it at the top level
--  #        so that the C-library can be installed without FFI
--  libname = ::FFI.map_library_name("yajl")
--  # awful windows patch, but there is an open issue to entirely replace FFI.map_library_name already
--  libname = "libyajl.so" if libname == "yajl.dll"
--  libpath = File.expand_path(File.join(Libyajl2.opt_path, libname))
--  libpath.gsub!(/dylib/, 'bundle')
--  libpath = ::FFI.map_library_name("yajl") unless File.exist?(libpath)
-+  libpath = 'libyajl.so.2'
- 
-   #
-   # FFS, what exactly was so wrong with DL.dlopen that ruby had to get rid of it???
+ require 'ffi_yajl/ext/dlopen'
 --- ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
 +++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb	2014-11-12 23:20:13.882893756 +0200
 @@ -1,13 +1,8 @@
@@ -79,3 +53,32 @@
  # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
  $LDFLAGS.slice!("-Wl,--no-undefined")
  
+--- ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb~	2016-06-02 18:51:31.000000000 +0300
++++ ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 18:53:35.695211477 +0300
+@@ -20,8 +20,6 @@
+ # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
+-require 'libyajl2'
+-
+ # Mixin for use in finding the right yajl library on the system.  The 'caller'
+ # needs to also mixin either the FFI module or the DLopen module.  Those are
+ # deliberately not mixed in to avoid loading the dlopen module in the ffi
+@@ -45,16 +43,7 @@
+     # @api private
+     # @return Array<String> Array of yajl library names for platform
+     def library_names
+-      case host_os
+-      when /mingw|mswin/
+-        [ "libyajl.so", "yajl.dll" ]
+-      when /cygwin/
+-        [ "libyajl.so", "cygyajl.dll" ]
+-      when /darwin/
+-        [ "libyajl.bundle", "libyajl.dylib" ]
+-      else
+-        [ "libyajl.so" ]
+-      end
++      [ "libyajl.so.2" ]
+     end
+ 
+     # Array of yajl library names prepended with the libyajl2 path to use to

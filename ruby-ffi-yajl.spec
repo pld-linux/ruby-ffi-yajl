@@ -8,14 +8,14 @@
 %define	pkgname	ffi-yajl
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
-Version:	1.3.1
-Release:	3
+Version:	2.2.3
+Release:	0.1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	ac12c13508dc6df56724a14670d6684a
+# Source0-md5:	f3ddfeddd03f44b6f7c02ad9e39fd41f
 Patch0:		system-yajl.patch
-URL:		http://github.com/opscode/ffi-yajl
+URL:		https://github.com/chef/ffi-yajl
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
 BuildRequires:	ruby-devel
@@ -23,6 +23,8 @@ BuildRequires:	ruby-rubygems
 BuildRequires:	sed >= 4.0
 BuildRequires:	yajl-devel >= 2.0
 %if %{with tests}
+BuildRequires:	ruby-ffi < 2
+BuildRequires:	ruby-ffi >= 1.5
 BuildRequires:	ruby-mime-types < 2
 BuildRequires:	ruby-mime-types >= 1.16
 BuildRequires:	ruby-pry < 1
@@ -37,6 +39,7 @@ BuildRequires:	ruby-rspec >= 2.99
 Requires:	ruby-ffi < 2
 Requires:	ruby-ffi >= 1.5
 # libyajl.so.2 opened by FFI
+Requires:	yajl < 3
 Requires:	yajl >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -95,8 +98,9 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_vendorlibdir}/ffi_yajl/encoder.rb
 %{ruby_vendorlibdir}/ffi_yajl/ext.rb
 %{ruby_vendorlibdir}/ffi_yajl/ffi.rb
-%{ruby_vendorlibdir}/ffi_yajl/json_gem.rb
+%{ruby_vendorlibdir}/ffi_yajl/map_library_name.rb
 %{ruby_vendorlibdir}/ffi_yajl/parser.rb
+%{ruby_vendorlibdir}/ffi_yajl/platform.rb
 %{ruby_vendorlibdir}/ffi_yajl/version.rb
 %dir %{ruby_vendorlibdir}/ffi_yajl/ffi
 %{ruby_vendorlibdir}/ffi_yajl/ffi/encoder.rb
