@@ -8,12 +8,12 @@
 %define	pkgname	ffi-yajl
 Summary:	Ruby FFI wrapper around YAJL 2.x
 Name:		ruby-%{pkgname}
-Version:	2.2.3
-Release:	3
+Version:	2.3.1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	f3ddfeddd03f44b6f7c02ad9e39fd41f
+# Source0-md5:	3d3e3302e437d801d7c44262f568d7b9
 Patch0:		system-yajl.patch
 URL:		https://github.com/chef/ffi-yajl
 BuildRequires:	rpm-rubyprov
@@ -23,20 +23,13 @@ BuildRequires:	ruby-rubygems
 BuildRequires:	sed >= 4.0
 BuildRequires:	yajl-devel >= 2.0
 %if %{with tests}
-BuildRequires:	ruby-ffi < 2
 BuildRequires:	ruby-ffi >= 1.5
-BuildRequires:	ruby-mime-types < 2
-BuildRequires:	ruby-mime-types >= 1.16
-BuildRequires:	ruby-pry < 1
 BuildRequires:	ruby-pry >= 0.9
-BuildRequires:	ruby-rake < 11
+BuildRequires:	ruby-rack >= 2.0
 BuildRequires:	ruby-rake >= 10.1
-BuildRequires:	ruby-rake-compiler < 0.9
-BuildRequires:	ruby-rake-compiler >= 0.8.3
-BuildRequires:	ruby-rspec < 3
-BuildRequires:	ruby-rspec >= 2.99
+BuildRequires:	ruby-rake-compiler >= 1.0
+BuildRequires:	ruby-rspec >= 3.0
 %endif
-Requires:	ruby-ffi < 2
 Requires:	ruby-ffi >= 1.5
 # libyajl.so.2 opened by FFI
 Requires:	yajl < 3
