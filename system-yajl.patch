@@ -4,11 +4,11 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
--require 'rubygems'
+-require "rubygems"
 -
--require 'libyajl2'
+-require "libyajl2"
  begin
-   require 'ffi'
+   require "ffi"
  rescue LoadError
 --- ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb~	2016-06-02 18:54:08.000000000 +0300
 +++ ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb	2016-06-02 18:54:34.768251524 +0300
@@ -16,19 +16,19 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
--require 'rubygems'
+-require "rubygems"
 -
- require 'ffi_yajl/encoder'
- require 'ffi_yajl/parser'
- require 'ffi_yajl/ext/dlopen'
+ require "ffi_yajl/encoder"
+ require "ffi_yajl/parser"
+ require "ffi_yajl/ext/dlopen"
 --- ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
 +++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb	2014-11-12 23:20:13.882893756 +0200
 @@ -1,13 +1,8 @@
- require 'mkmf'
- require 'rubygems'
--require 'libyajl2'
+ require "mkmf"
+ require "rubygems"
+-require "libyajl2"
  
- RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+ RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
  
 -# pick up the vendored libyajl2 out of the libyajl2 gem
 -$CFLAGS = " -I#{Libyajl2.include_path} #{$CFLAGS}"
@@ -40,11 +40,11 @@
 --- ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
 +++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb	2014-11-12 23:20:29.100220591 +0200
 @@ -1,13 +1,8 @@
- require 'mkmf'
- require 'rubygems'
--require 'libyajl2'
+ require "mkmf"
+ require "rubygems"
+-require "libyajl2"
  
- RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+ RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
  
 -# pick up the vendored libyajl2 out of the libyajl2 gem
 -$CFLAGS = "-I#{Libyajl2.include_path} #{$CFLAGS}"
@@ -59,7 +59,7 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
--require 'libyajl2'
+-require "libyajl2"
 -
  # Mixin for use in finding the right yajl library on the system.  The 'caller'
  # needs to also mixin either the FFI module or the DLopen module.  Those are
