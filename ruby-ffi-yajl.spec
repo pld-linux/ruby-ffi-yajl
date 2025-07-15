@@ -41,7 +41,7 @@ Ruby FFI wrapper around YAJL 2.x
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-%patch0 -p1
+%patch -P0 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 %build
