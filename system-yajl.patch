@@ -1,70 +1,73 @@
---- ffi-yajl-2.2.3/lib/ffi_yajl/ffi.rb~	2016-06-02 18:51:31.000000000 +0300
-+++ ffi-yajl-2.2.3/lib/ffi_yajl/ffi.rb	2016-06-02 18:52:21.951416437 +0300
-@@ -20,9 +20,6 @@
+diff -ur ffi-yajl-2.3.1.orig/ext/ffi_yajl/ext/encoder/extconf.rb ffi-yajl-2.3.1/ext/ffi_yajl/ext/encoder/extconf.rb
+--- ffi-yajl-2.3.1.orig/ext/ffi_yajl/ext/encoder/extconf.rb	2026-03-20 15:23:36.892973559 +0100
++++ ffi-yajl-2.3.1/ext/ffi_yajl/ext/encoder/extconf.rb	2026-03-20 15:24:49.994270674 +0100
+@@ -1,13 +1,10 @@
+ # rubocop:disable Style/GlobalVars
+ require "mkmf"
+ require "rubygems"
+-require "libyajl2"
+ 
+ RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
+ 
+ # pick up the vendored libyajl2 out of the libyajl2 gem
+-$CFLAGS = " -I#{Libyajl2.include_path} #{$CFLAGS}"
+-$LDFLAGS = " -L#{Libyajl2.opt_path} #{$LDFLAGS}"
+ 
+ # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
+ $LDFLAGS.slice!("-Wl,--no-undefined")
+diff -ur ffi-yajl-2.3.1.orig/ext/ffi_yajl/ext/parser/extconf.rb ffi-yajl-2.3.1/ext/ffi_yajl/ext/parser/extconf.rb
+--- ffi-yajl-2.3.1.orig/ext/ffi_yajl/ext/parser/extconf.rb	2026-03-20 15:23:36.892664799 +0100
++++ ffi-yajl-2.3.1/ext/ffi_yajl/ext/parser/extconf.rb	2026-03-20 15:24:49.996378093 +0100
+@@ -1,13 +1,10 @@
+ # rubocop:disable Style/GlobalVars
+ require "mkmf"
+ require "rubygems"
+-require "libyajl2"
+ 
+ RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
+ 
+ # pick up the vendored libyajl2 out of the libyajl2 gem
+-$CFLAGS = "-I#{Libyajl2.include_path} #{$CFLAGS}"
+-$LDFLAGS = "-L#{Libyajl2.opt_path} #{$LDFLAGS}"
+ 
+ # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
+ $LDFLAGS.slice!("-Wl,--no-undefined")
+diff -ur ffi-yajl-2.3.1.orig/lib/ffi_yajl/ext.rb ffi-yajl-2.3.1/lib/ffi_yajl/ext.rb
+--- ffi-yajl-2.3.1.orig/lib/ffi_yajl/ext.rb	2026-03-20 15:23:36.890821214 +0100
++++ ffi-yajl-2.3.1/lib/ffi_yajl/ext.rb	2026-03-20 15:24:49.992021692 +0100
+@@ -20,7 +20,6 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
 -require "rubygems"
--
+ 
+ require "ffi_yajl/encoder"
+ require "ffi_yajl/parser"
+diff -ur ffi-yajl-2.3.1.orig/lib/ffi_yajl/ffi.rb ffi-yajl-2.3.1/lib/ffi_yajl/ffi.rb
+--- ffi-yajl-2.3.1.orig/lib/ffi_yajl/ffi.rb	2026-03-20 15:23:36.890821214 +0100
++++ ffi-yajl-2.3.1/lib/ffi_yajl/ffi.rb	2026-03-20 15:24:49.989755059 +0100
+@@ -20,9 +20,7 @@
+ # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
+-require "rubygems"
+ 
 -require "libyajl2"
  begin
    require "ffi"
  rescue LoadError
---- ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb~	2016-06-02 18:54:08.000000000 +0300
-+++ ffi-yajl-2.2.3/lib/ffi_yajl/ext.rb	2016-06-02 18:54:34.768251524 +0300
-@@ -20,8 +20,6 @@
- # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- 
--require "rubygems"
--
- require "ffi_yajl/encoder"
- require "ffi_yajl/parser"
- require "ffi_yajl/ext/dlopen"
---- ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
-+++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/encoder/extconf.rb	2014-11-12 23:20:13.882893756 +0200
-@@ -1,13 +1,8 @@
- require "mkmf"
- require "rubygems"
--require "libyajl2"
- 
- RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
- 
--# pick up the vendored libyajl2 out of the libyajl2 gem
--$CFLAGS = " -I#{Libyajl2.include_path} #{$CFLAGS}"
--$LDFLAGS = " -L#{Libyajl2.opt_path} #{$LDFLAGS}"
--
- # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
- $LDFLAGS.slice!("-Wl,--no-undefined")
- 
---- ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb~	2014-11-12 23:19:03.000000000 +0200
-+++ ffi-yajl-1.2.0/ext/ffi_yajl/ext/parser/extconf.rb	2014-11-12 23:20:29.100220591 +0200
-@@ -1,13 +1,8 @@
- require "mkmf"
- require "rubygems"
--require "libyajl2"
- 
- RbConfig::MAKEFILE_CONFIG["CC"] = ENV["CC"] if ENV["CC"]
- 
--# pick up the vendored libyajl2 out of the libyajl2 gem
--$CFLAGS = "-I#{Libyajl2.include_path} #{$CFLAGS}"
--$LDFLAGS = "-L#{Libyajl2.opt_path} #{$LDFLAGS}"
--
- # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
- $LDFLAGS.slice!("-Wl,--no-undefined")
- 
---- ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 18:53:35.695211477 +0300
-+++ ffi-yajl-2.2.3/lib/ffi_yajl/map_library_name.rb	2016-06-02 19:07:39.085294423 +0300
-@@ -20,8 +20,6 @@
+diff -ur ffi-yajl-2.3.1.orig/lib/ffi_yajl/map_library_name.rb ffi-yajl-2.3.1/lib/ffi_yajl/map_library_name.rb
+--- ffi-yajl-2.3.1.orig/lib/ffi_yajl/map_library_name.rb	2026-03-20 15:23:36.891121200 +0100
++++ ffi-yajl-2.3.1/lib/ffi_yajl/map_library_name.rb	2026-03-20 15:24:44.409825582 +0100
+@@ -20,7 +20,6 @@
  # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
 -require "libyajl2"
--
+ 
  # Mixin for use in finding the right yajl library on the system.  The 'caller'
  # needs to also mixin either the FFI module or the DLopen module.  Those are
- # deliberately not mixed in to avoid loading the dlopen module in the ffi
-@@ -45,16 +43,7 @@
+@@ -45,16 +44,7 @@
      # @api private
      # @return Array<String> Array of yajl library names for platform
      def library_names
@@ -82,8 +85,15 @@
      end
  
      # Array of yajl library names prepended with the libyajl2 path to use to
-@@ -78,7 +67,7 @@
-     # @api private
+@@ -71,14 +61,9 @@
+       end.compact
+     end
+ 
+-    # Iterate across the expanded library names in the libyajl2-gem and then
+-    # attempt to load the system libraries.  Uses the native dlopen extension
+-    # that ships in this gem.
+-    #
+-    # @api private
      def dlopen_yajl_library
        found = false
 -      ( expanded_library_names + library_names ).each do |libname|
